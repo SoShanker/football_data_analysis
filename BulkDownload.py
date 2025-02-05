@@ -6,8 +6,8 @@ class BulkDownload:
     def __init__(self, download_path):
         self.path = download_path
         self.leagues = {
+            "PremierLeague":"english-premier-league",
             "Ligue1" : "french-ligue-1",
-            # "PremierLeague":"PL",
             "Bundesliga":"german-bundesliga",
             "SerieA":"italian-serie-a",
             "Liga":"spanish-la-liga"
@@ -15,6 +15,22 @@ class BulkDownload:
         self.headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'}
 
     def download_file(self, league, season):
+        if league == "PremierLeague":
+            #For some reason the datahub for premier league is not the same as the others. CSV files aren't shown on landpage, however they are still downloadable from the url
+            # https://datahub.io/core/english-premier-league/_r/-/season-xxxx.csv
+            season_str = f"{str(season)[2:]}{str(season+1)[2:]}"
+            csv_response = requests.get(f"https://datahub.io/core/english-premier-league/_r/-/season-{season_str}.csv")
+            if csv_response.status_code == 200:
+                league_path = os.path.join(self.path, league)
+                os.makedirs(league_path, exist_ok=True)
+                
+                file_path = os.path.join(league_path, f'season{season}-{season+1}.csv')
+                with open(file_path, 'wb') as file:
+                    file.write(csv_response.content)
+                print(f'CSV file downloaded successfully: {file_path}')
+            else:
+                print(f"Échec du téléchargement: {csv_link}")
+            return
         if league not in self.leagues:
             print(f"Ligue inconnue: {league}")
             return
