@@ -71,6 +71,7 @@ class BulkDownload:
         for league in self.leagues:
             print(f"Mise à jour pour {league}, saison {ongoing_season}-{ongoing_season+1}")
             self.download_file(league, ongoing_season)
+            self.create_global_file(league)
 
     def create_global_file(self,league):
         path = self.path + f"/{league}"
