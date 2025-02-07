@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import os
+import pandas as pd
 
 class BulkDownload:
     def __init__(self, download_path):
@@ -64,12 +65,41 @@ class BulkDownload:
             for year in range(2000, 2025):
                 print(f"Saison {year}-{year+1}")
                 self.download_file(league, year)
+            self.create_global_file(league)
 
     def update_ongoing_season(self, ongoing_season=2024):
         for league in self.leagues:
             print(f"Mise à jour pour {league}, saison {ongoing_season}-{ongoing_season+1}")
             self.download_file(league, ongoing_season)
 
+    def create_global_file(self,league):
+        path = self.path + f"/{league}"
+        # Create a line that will separate each season 
+        columns = ["Date","HomeTeam","AwayTeam","FTR","FTHG","FTAG","HTHG","HTAG"]
+        endofseasondf = pd.DataFrame(columns=columns)
+        entry = pd.DataFrame.from_dict({
+            "Date":["End of season"],
+            "HomeTeam":[None],
+            "AwayTeam":[None],
+            "FTR":[None],
+            "FTHG":[None],
+            "FTAG":[None],
+            "HTHG":[None],
+            "HTAG":[None]
+        })
+        endofseasondf = pd.concat([endofseasondf, entry], ignore_index=True)
+
+        seasons = pd.DataFrame(columns=columns)
+        for file in os.listdir(path):
+            data = pd.read_csv(path +f"/{file}")
+            data_light = data[columns]
+            seasons = pd.concat([seasons,data_light,endofseasondf])
+
+        seasons.to_csv(path+"/Allseasons.csv")
+
+
 if __name__ == "__main__":
     downloader = BulkDownload("FootballData")
     downloader.download_all_data_since_2000()
+
+    
