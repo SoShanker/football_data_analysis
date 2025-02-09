@@ -20,3 +20,15 @@ python3 -m venv venv
 .\venv\Script\activate
 pip install -r requirements.txt
 ```
+
+
+## Objectives 
+
+### Tab with the ranking of all the leagues availables and seasons
+### Compute streaks and display the main opportunities
+
+-0.5 HT Goals
+-1.5 HT Goals
++1.5 FT Goals
+-3.5 FT Goals
+Lay the draw
