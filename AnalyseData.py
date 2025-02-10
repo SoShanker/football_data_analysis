@@ -1,3 +1,6 @@
+import pandas as pd
+import os 
+
 class AnalyzeFootballData:
     def __init__(self,download_path:str):
         self.path = download_path
@@ -8,6 +11,7 @@ class AnalyzeFootballData:
             "SerieA":"italian-serie-a",
             "Liga":"spanish-la-liga"
         }
+        self.ongoingseason = "2024-2025"
 
     def compute_actual_teams(self,league:str):
         '''
@@ -15,8 +19,10 @@ class AnalyzeFootballData:
         Input : League name
         Output : List of teams name
         '''
-        #TODO
-
+        ongoing_season_df = pd.read_csv(os.path.join(self.path,league,f"season{self.ongoingseason}.csv"))
+        teams = list(ongoing_season_df["HomeTeam"].drop_duplicates())
+        return teams
+    
     def compute_ranking(self,league:str,year:int):
         '''
         Calculate ranking from results
@@ -48,3 +54,9 @@ class AnalyzeFootballData:
         Output : Dict of the actual streaks
         '''
         #TODO
+
+
+if __name__ == "__main__":
+    analysis = AnalyzeFootballData("FootballData")
+    for league in analysis.leagues:
+        print(analysis.compute_actual_teams(league))
