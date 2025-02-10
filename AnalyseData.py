@@ -14,6 +14,7 @@ class AnalyzeFootballData:
         self.ongoingseason = "2024-2025"
     
     def compute_ranking(self,league:str,year:int):
+        #TODO Check Retraits de points - Exemple Nice a eu un point retiré en 2021-2022
         '''
         Calculate ranking from results
         Input : League name and starting year of the season
@@ -21,25 +22,28 @@ class AnalyzeFootballData:
         '''
         season_df = pd.read_csv(os.path.join(self.path,league,f"season{year}-{year+1}.csv"))
         teams = list(season_df["HomeTeam"].drop_duplicates())
-        scores = {team : 0 for team in teams}
+        scores = {team : {"Points":0,"ScoredGoals":0,"TakenGoals":0} for team in teams}
 
         for i in range (len(season_df)):
             match = season_df.iloc[i]
             home_team,away_team = match["HomeTeam"],match["AwayTeam"]
+            scores[home_team]["ScoredGoals"] += match["FTHG"]
+            scores[away_team]["TakenGoals"] += match["FTHG"]
+            scores[home_team]["TakenGoals"] += match["FTAG"]
+            scores[away_team]["ScoredGoals"] += match["FTAG"]
             result = match["FTR"]
             if result == "H":
-                scores[home_team]+=3
+                scores[home_team]["Points"]+=3
             elif result == "A":
-                scores[away_team]+=3
+                scores[away_team]["Points"]+=3
             else:
-                scores[away_team]+=1
-                scores[home_team]+=1
-            
-        scores = {k: v for k, v in sorted(scores.items(), key=lambda item: item[1],reverse=True)}
+                scores[home_team]["Points"]+=1
+                scores[away_team]["Points"]+=1
 
-        final_ranking = pd.DataFrame()
-        final_ranking["Team"] = list(scores.keys())
-        final_ranking["Score"] = list(scores.values())
+        final_ranking = pd.DataFrame.from_dict(scores,orient="index")
+        final_ranking["Teams"] = list(scores.keys())
+        final_ranking["GoalAverage"] = final_ranking["ScoredGoals"] - final_ranking["TakenGoals"]
+        final_ranking.sort_values(by=["Points","GoalAverage"],inplace=True,ascending=False,ignore_index=True)
         return final_ranking
 
     def compute_win_lose_history(self,league:str):
@@ -68,4 +72,5 @@ class AnalyzeFootballData:
 
 
 if __name__ == "__main__":
-    analysis = AnalyzeFootballData("FootballData")
+    analysis = AnalyzeFootballData("FootballData") 
+    print(analysis.compute_ranking("Ligue1",2021))
