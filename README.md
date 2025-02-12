@@ -20,6 +20,15 @@ python3 -m venv venv
 .\venv\Script\activate
 pip install -r requirements.txt
 ```
+## Setup WebApp
+I used Next.js to create React App. It’s versatile and lets you create React apps of any size—from a mostly static blog to a complex dynamic application.
+To launch it, type :
+```shell
+cd webapp
+npm install
+npm run dev
+```
+WebApp is starting on localhost:3000
 
 
 ## Objectives 
