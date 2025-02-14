@@ -18,7 +18,7 @@ DATA_DIR = "../FootballData/"  # Dossier contenant les fichiers CSV
 
 @app.get("/api/rankings")
 def get_rankings(year: str, league: str):
-    file_path = os.path.join(DATA_DIR, f"{league}/season{year}-{int(year)+1}.csv")
+    file_path = os.path.join(DATA_DIR, f"{league}/ranking_{year}-{int(year)+1}.csv")
 
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="Fichier non trouvé")
