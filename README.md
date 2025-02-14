@@ -30,7 +30,12 @@ npm run dev
 ```
 WebApp is starting on localhost:3000
 
-
+## Launch python server
+A python server setup an API to get the data files and treat it
+```shell
+cd backend
+uvicorn server:app --reload --host 0.0.0.0 --port 8000
+```
 ## Objectives 
 
 ### Tab with the ranking of all the leagues availables and seasons
