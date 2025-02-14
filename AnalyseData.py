@@ -14,7 +14,7 @@ class AnalyzeFootballData:
         self.ongoingseason = "2024-2025"
     
     def compute_ranking(self,league:str,year:int):
-        #TODO Check Retraits de points - Exemple Nice a eu un point retiré en 2021-2022
+        #TODO Check Retraits de points - Exemple Nice a eu un point retiré en 2021-2022 en penalité
         '''
         Calculate ranking from results
         Input : League name and starting year of the season
@@ -44,7 +44,9 @@ class AnalyzeFootballData:
         final_ranking["Teams"] = list(scores.keys())
         final_ranking["GoalAverage"] = final_ranking["ScoredGoals"] - final_ranking["TakenGoals"]
         final_ranking.sort_values(by=["Points","GoalAverage"],inplace=True,ascending=False,ignore_index=True)
-        return final_ranking
+
+        final_ranking.to_csv(os.path.join(self.path,league,f"ranking_{year}-{year+1}.csv"))
+        print(f"{league} : Ranking for season {year}-{year+1} successfully generated.")
 
     def compute_win_lose_history(self,league:str):
         '''
@@ -73,4 +75,6 @@ class AnalyzeFootballData:
 
 if __name__ == "__main__":
     analysis = AnalyzeFootballData("FootballData") 
-    print(analysis.compute_ranking("Ligue1",2021))
+    for league in analysis.leagues:
+        for year in range(2000,2025):
+            analysis.compute_ranking(league,year)
