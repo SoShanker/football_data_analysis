@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
 export default function Home() {
-  const [year, setYear] = useState("2023");
-  const [league, setLeague] = useState("premier_league");
+  const [year, setYear] = useState("2024");
+  const [league, setLeague] = useState("Ligue1");
   const [rankings, setRankings] = useState([]);
 
   useEffect(() => {
@@ -46,10 +46,10 @@ export default function Home() {
         </select>
 
         <select className="p-2 border rounded" onChange={(e) => setLeague(e.target.value)}>
+          <option value="Ligue1">Ligue 1</option>
           <option value="PremierLeague">Premier League</option>
           <option value="Liga">La Liga</option>
           <option value="SerieA">Serie A</option>
-          <option value="Ligue1">Ligue 1</option>
           <option value="Bundesliga">Bundesliga</option>
         </select>
       </div>
