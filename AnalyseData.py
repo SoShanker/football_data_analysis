@@ -75,6 +75,10 @@ class AnalyzeFootballData:
 
 if __name__ == "__main__":
     analysis = AnalyzeFootballData("FootballData") 
+    #If it's the first time you launch it, use :
     for league in analysis.leagues:
         for year in range(2000,2025):
             analysis.compute_ranking(league,year)
+    #Else
+    # for league in analysis.leagues:
+    #     analysis.compute_ranking(league,analysis.ongoingseason)
