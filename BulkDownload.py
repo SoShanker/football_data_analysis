@@ -13,6 +13,7 @@ class BulkDownload:
             "SerieA":"italian-serie-a",
             "Liga":"spanish-la-liga"
         }
+        self.ongoing_season = 2024
         self.headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'}
 
     def download_file(self, league, season):
@@ -43,10 +44,10 @@ class BulkDownload:
                 self.download_file(league, year)
             self.create_global_file(league)
 
-    def update_ongoing_season(self, ongoing_season=2024):
+    def update_ongoing_season(self):
         for league in self.leagues:
-            print(f"Mise à jour pour {league}, saison {ongoing_season}-{ongoing_season+1}")
-            self.download_file(league, ongoing_season)
+            print(f"Mise à jour pour {league}, saison {self.ongoing_season}-{self.ongoing_season+1}")
+            self.download_file(league, self.ongoing_season)
             self.create_global_file(league)
 
     def create_global_file(self,league):
@@ -77,6 +78,9 @@ class BulkDownload:
 
 if __name__ == "__main__":
     downloader = BulkDownload("FootballData")
-    downloader.download_all_data_since_2000()
+    #If it's the first launch, run 
+    # downloader.download_all_data_since_2000()
+    #Else update only
+    downloader.update_ongoing_season()
 
     
