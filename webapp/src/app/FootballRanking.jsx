@@ -18,33 +18,61 @@ export default function Home() {
 
       <div className="flex space-x-4 mb-5">
         <select className="p-2 border rounded" onChange={(e) => setYear(e.target.value)}>
+          <option value="2024">2024</option>
           <option value="2023">2023</option>
           <option value="2022">2022</option>
           <option value="2021">2021</option>
+          <option value="2020">2020</option>
+          <option value="2019">2019</option>
+          <option value="2018">2018</option>
+          <option value="2017">2017</option>
+          <option value="2016">2016</option>
+          <option value="2015">2015</option>
+          <option value="2014">2014</option>
+          <option value="2013">2013</option>
+          <option value="2012">2012</option>
+          <option value="2011">2011</option>
+          <option value="2010">2010</option>
+          <option value="2009">2009</option>
+          <option value="2008">2008</option>
+          <option value="2007">2007</option>
+          <option value="2006">2006</option>
+          <option value="2005">2005</option>
+          <option value="2004">2004</option>
+          <option value="2003">2003</option>
+          <option value="2002">2002</option>
+          <option value="2001">2001</option>
+          <option value="2000">2000</option>
         </select>
 
         <select className="p-2 border rounded" onChange={(e) => setLeague(e.target.value)}>
-          <option value="premier_league">Premier League</option>
-          <option value="la_liga">La Liga</option>
-          <option value="serie_a">Serie A</option>
+          <option value="PremierLeague">Premier League</option>
+          <option value="Liga">La Liga</option>
+          <option value="SerieA">Serie A</option>
+          <option value="Ligue1">Ligue 1</option>
+          <option value="Bundesliga">Bundesliga</option>
         </select>
       </div>
 
       <table className="table-auto border-collapse border border-gray-400">
         <thead>
           <tr className="bg-gray-300">
-            <th className="border p-2">Position</th>
             <th className="border p-2">Équipe</th>
             <th className="border p-2">Points</th>
+            <th className="border p-2">Buts marqués</th>
+            <th className="border p-2">Buts encaissés</th>
+            <th className="border p-2">Goal average</th>
           </tr>
         </thead>
         <tbody>
           {rankings.length > 0 ? (
             rankings.map((team, index) => (
               <tr key={index} className="bg-white">
-                <td className="border p-2">{team.Position}</td>
-                <td className="border p-2">{team.Team}</td>
+                <td className="border p-2">{team.Teams}</td>
                 <td className="border p-2">{team.Points}</td>
+                <td className="border p-2">{team.ScoredGoals}</td>
+                <td className="border p-2">{team.TakenGoals}</td>
+                <td className="border p-2">{team.GoalAverage}</td>
               </tr>
             ))
           ) : (
