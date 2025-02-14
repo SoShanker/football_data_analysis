@@ -33,30 +33,6 @@ class BulkDownload:
             print(f'CSV file downloaded successfully: {file_path}')
         else:
             print(f"Échec du téléchargement: {league} - {season}")
-
-        # league_id = self.leagues[league]
-        # req = requests.get(f"https://datahub.io/core/{league_id}",headers=self.headers)
-        # soup = BeautifulSoup(req.content, 'html.parser')
-
-        # try:
-        #     season_str = f"{str(season)[2:]}{str(season+1)[2:]}"
-        #     csv_link = [s for s in soup.findAll('tr', {'class': 'even:bg-gray-50'}) if s.find("a",{"href":f"#season-{season_str}"})][0].find("a",{"target":"_blank"})["href"]
-        #     if not csv_link.startswith('http'):
-        #             csv_link = 'https://datahub.io' + csv_link
-        #     # Now download the CSV as before
-        #     csv_response = requests.get(csv_link)
-        #     if csv_response.status_code == 200:
-        #         league_path = os.path.join(self.path, league)
-        #         os.makedirs(league_path, exist_ok=True)
-                
-        #         file_path = os.path.join(league_path, f'season{season}-{season+1}.csv')
-        #         with open(file_path, 'wb') as file:
-        #             file.write(csv_response.content)
-        #         print(f'CSV file downloaded successfully: {file_path}')
-        #     else:
-        #         print(f"Échec du téléchargement: {csv_link}")
-        # except Exception as e:
-        #     print(f"Erreur lors de la récupération du fichier pour {league} {season}: {e}")
             
 
     def download_all_data_since_2000(self):
@@ -83,7 +59,7 @@ class BulkDownload:
             "HomeTeam":[None],
             "AwayTeam":[None],
             "FTR":[None],
-            "FTHG":[None],
+            "FTHG":[None], 
             "FTAG":[None],
             "HTHG":[None],
             "HTAG":[None]
