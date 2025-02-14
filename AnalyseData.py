@@ -1,6 +1,7 @@
 import pandas as pd
 import os 
 
+from Variables import *
 class AnalyzeFootballData:
     def __init__(self,download_path:str):
         self.path = download_path
@@ -40,10 +41,21 @@ class AnalyzeFootballData:
                 scores[home_team]["Points"]+=1
                 scores[away_team]["Points"]+=1
 
+        for team in teams:
+            if year in POINTS_SANCTION[league]:
+                if team in POINTS_SANCTION[league][year]:
+                    print(f"{team} had a penality of {POINTS_SANCTION[league][year][team]} in {year}")
+                    scores[team]["Points"] += POINTS_SANCTION[league][year][team]
+
         final_ranking = pd.DataFrame.from_dict(scores,orient="index")
         final_ranking["Teams"] = list(scores.keys())
         final_ranking["GoalAverage"] = final_ranking["ScoredGoals"] - final_ranking["TakenGoals"]
         final_ranking.sort_values(by=["Points","GoalAverage"],inplace=True,ascending=False,ignore_index=True)
+
+        #Ranking was a bit akward during COVID-19, so we have to invert lines
+        if year == 2019 and league == "Ligue1":
+            final_ranking.iloc[[4, 5]] = final_ranking.iloc[[5, 4]].copy().values
+            final_ranking.iloc[[9, 10]] = final_ranking.iloc[[10, 9]].copy().values
 
         final_ranking.to_csv(os.path.join(self.path,league,f"ranking_{year}-{year+1}.csv"))
         print(f"{league} : Ranking for season {year}-{year+1} successfully generated.")
