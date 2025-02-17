@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import os
 import pandas as pd
 
+from Variables import *
 class BulkDownload:
     def __init__(self, download_path):
         self.path = download_path
@@ -42,45 +43,29 @@ class BulkDownload:
             for year in range(2000, 2025):
                 print(f"Saison {year}-{year+1}")
                 self.download_file(league, year)
-            self.create_global_file(league)
+                self.unique_names(league,year)
 
     def update_ongoing_season(self):
         for league in self.leagues:
             print(f"Mise à jour pour {league}, saison {self.ongoing_season}-{self.ongoing_season+1}")
             self.download_file(league, self.ongoing_season)
-            self.create_global_file(league)
+            self.unique_names(league,self.ongoing_season)
 
-    def create_global_file(self,league):
-        path = self.path + f"/{league}"
-        # Create a line that will separate each season 
-        columns = ["Date","HomeTeam","AwayTeam","FTR","FTHG","FTAG","HTHG","HTAG"]
-        endofseasondf = pd.DataFrame(columns=columns)
-        entry = pd.DataFrame.from_dict({
-            "Date":["End of season"],
-            "HomeTeam":[None],
-            "AwayTeam":[None],
-            "FTR":[None],
-            "FTHG":[None], 
-            "FTAG":[None],
-            "HTHG":[None],
-            "HTAG":[None]
-        })
-        endofseasondf = pd.concat([endofseasondf, entry], ignore_index=True)
+    def unique_names(self,league:str,year:int):
+        def replace_names(l):
+            return l.replace(UNIQUE_NAMES)
 
-        seasons = pd.DataFrame(columns=columns)
-        for file in os.listdir(path):
-            data = pd.read_csv(path +f"/{file}")
-            data_light = data[columns]
-            seasons = pd.concat([seasons,data_light,endofseasondf])
-
-        seasons.to_csv(path+"/Allseasons.csv")
-
+        file_path = os.path.join(self.path, league,f'season{year}-{year+1}.csv')
+        file = pd.read_csv(file_path)
+        file["HomeTeam"].apply(replace_names)
+        file["AwayTeam"].apply(replace_names)
+        file.to_csv(file_path)
 
 if __name__ == "__main__":
     downloader = BulkDownload("FootballData")
     #If it's the first launch, run 
-    # downloader.download_all_data_since_2000()
+    downloader.download_all_data_since_2000()
     #Else update only
-    downloader.update_ongoing_season()
+    # downloader.update_ongoing_season()
 
     

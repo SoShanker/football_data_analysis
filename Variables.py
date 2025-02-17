@@ -35,3 +35,8 @@ POINTS_SANCTION={
 
     }
 }
+
+UNIQUE_NAMES ={
+    "Ajaccio GFCO": "Ajaccio", 
+    "AC Ajaccio": "Ajaccio"
+}
