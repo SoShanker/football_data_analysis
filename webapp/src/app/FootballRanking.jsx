@@ -13,8 +13,8 @@ export default function Home() {
   }, [year, league]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-5">
-      <h1 className="text-3xl font-bold mb-5">Classements de Football</h1>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
+      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Classements de Football</h1>
 
       <div className="flex space-x-4 mb-5">
         <select className="p-2 border rounded" onChange={(e) => setYear(e.target.value)}>
