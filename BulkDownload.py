@@ -52,13 +52,10 @@ class BulkDownload:
             self.unique_names(league,self.ongoing_season)
 
     def unique_names(self,league:str,year:int):
-        def replace_names(l):
-            return l.replace(UNIQUE_NAMES)
-
         file_path = os.path.join(self.path, league,f'season{year}-{year+1}.csv')
         file = pd.read_csv(file_path)
-        file["HomeTeam"].apply(replace_names)
-        file["AwayTeam"].apply(replace_names)
+        file["HomeTeam"] = file["HomeTeam"].replace(UNIQUE_NAMES)
+        file["AwayTeam"] = file["AwayTeam"].replace(UNIQUE_NAMES)
         file.to_csv(file_path)
 
 if __name__ == "__main__":
