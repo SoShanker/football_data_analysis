@@ -23,13 +23,48 @@ POINTS_SANCTION={
         }
     },
     "PremierLeague":{
-
+        2023:{
+            "Everton":-8,
+            "Nott'm Forest":-4
+        }
     },
     "SerieA":{
-
+        2005:{ #Affaire Calciopoli
+            "Juventus":-91,
+            "Milan":-30,
+            "Fiorentina":-30,
+            "Lazio":-30
+        },
+        2006:{ #Affaire Calciopoli
+            "Milan":-8,
+            "Lazio":-3,
+            "Fiorentina":-15,
+            "Reggina":-11,
+            "Siena":-1
+        },
+        2010:{
+            "Bologne":-3 #Coupable de tentative de fraude fiscale, Bologne a écopé d'une pénalité d'un point au classement de la part de la Commission de discipline
+        },
+        2011:{
+            "Atalanta":-6 #Scandale de paris truqués
+        },
+        2012:{
+            "Sampdoria":-1,
+            "Atalanta":-2,
+            "Torino":-1,
+            "Siena":-6
+        },
+        2014:{
+            "Parma":-7
+        },
+        2018:{
+            "Chievo":-3
+        }
     },
     "Bundesliga":{
-
+        2003:{
+            "Kaiserslautern":-3
+        }
     },
     "Liga":{
 
