@@ -6,7 +6,7 @@ export default function Home() {
   const [rankings, setRankings] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/api/rankings?year=${year}&league=${league}`)
+    fetch(`http://localhost:8000/api/rankings?year=${year}&league=${league.replace(/ /g, '')}`)
       .then((res) => res.json())
       .then((data) => setRankings(data))
       .catch((err) => console.error("Erreur lors du chargement :", err));
@@ -14,12 +14,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
-      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Classements de Football</h1>
+      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Classement  {league}</h1>
       
       <div className="flex flex-row items-center flex space-x-10 justify-center bg-gray-100 p-4">
-        <img src={'/Flags.svg#france'} alt="My Image" width={80} height={38} onClick={(e) => setLeague("Ligue1")}/>
-        <img src={'/Flags.svg#england'} alt="My Image" width={80} height={38} onClick={(e) => setLeague("PremierLeague")}/>
-        <img src={'/Flags.svg#italy'} alt="My Image" width={80} height={38} onClick={(e) => setLeague("SerieA")}/>
+        <img src={'/Flags.svg#france'} alt="My Image" width={80} height={38} onClick={(e) => setLeague("Ligue 1")}/>
+        <img src={'/Flags.svg#england'} alt="My Image" width={80} height={38} onClick={(e) => setLeague("Premier League")}/>
+        <img src={'/Flags.svg#italy'} alt="My Image" width={80} height={38} onClick={(e) => setLeague("Serie A")}/>
         <img src={'/Flags.svg#spain'} alt="My Image" width={80} height={38} onClick={(e) => setLeague("Liga")}/>
         <img src={'/Flags.svg#germany'} alt="My Image" width={80} height={38} onClick={(e) => setLeague("Bundesliga")}/>
       </div>
