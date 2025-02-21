@@ -17,8 +17,16 @@ python3 -m venv venv
 ```
 
 ```shell
-.\venv\Script\activate
+.\venv\Scripts\activate
 pip install -r requirements.txt
+```
+
+## Launch python server
+A python server setup an API to get the data files and treat it
+```shell
+.\venv\Scripts\activate
+cd backend
+uvicorn server:app --reload --host 0.0.0.0 --port 8000
 ```
 ## Setup WebApp
 I used Next.js to create React App. It’s versatile and lets you create React apps of any size—from a mostly static blog to a complex dynamic application.
@@ -30,12 +38,7 @@ npm run dev
 ```
 WebApp is starting on localhost:3000
 
-## Launch python server
-A python server setup an API to get the data files and treat it
-```shell
-cd backend
-uvicorn server:app --reload --host 0.0.0.0 --port 8000
-```
+
 ## Objectives 
 
 ### Tab with the ranking of all the leagues availables and seasons
