@@ -15,7 +15,15 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
       <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Classements de Football</h1>
-
+      
+      <div className="flex flex-row items-center flex space-x-10 justify-center bg-gray-100 p-4">
+        <img src={'/Flags.svg#france'} alt="My Image" width={80} height={38} onClick={(e) => setLeague("Ligue1")}/>
+        <img src={'/Flags.svg#england'} alt="My Image" width={80} height={38} onClick={(e) => setLeague("PremierLeague")}/>
+        <img src={'/Flags.svg#italy'} alt="My Image" width={80} height={38} onClick={(e) => setLeague("SerieA")}/>
+        <img src={'/Flags.svg#spain'} alt="My Image" width={80} height={38} onClick={(e) => setLeague("Liga")}/>
+        <img src={'/Flags.svg#germany'} alt="My Image" width={80} height={38} onClick={(e) => setLeague("Bundesliga")}/>
+      </div>
+      
       <div className="flex space-x-4 mb-5">
         <select className="p-2 border rounded" onChange={(e) => setYear(e.target.value)}>
           <option value="2024">2024</option>
@@ -43,14 +51,6 @@ export default function Home() {
           <option value="2002">2002</option>
           <option value="2001">2001</option>
           <option value="2000">2000</option>
-        </select>
-
-        <select className="p-2 border rounded" onChange={(e) => setLeague(e.target.value)}>
-          <option value="Ligue1">Ligue 1</option>
-          <option value="PremierLeague">Premier League</option>
-          <option value="Liga">La Liga</option>
-          <option value="SerieA">Serie A</option>
-          <option value="Bundesliga">Bundesliga</option>
         </select>
       </div>
 
