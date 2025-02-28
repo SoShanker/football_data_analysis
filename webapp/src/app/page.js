@@ -1,10 +1,11 @@
 'use client'
 import FootballRankings from "./FootballRanking";
+import Tabs from "./Tabs"
 
 function App() {
   return (
     <div className="App">
-      <FootballRankings />
+      <Tabs />
     </div>
   );
 }
