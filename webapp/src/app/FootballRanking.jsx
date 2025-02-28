@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 export default function Home() {
   const [year, setYear] = useState("2024");
-  const [league, setLeague] = useState("Ligue1");
+  const [league, setLeague] = useState("Ligue 1");
   const [rankings, setRankings] = useState([]);
 
   useEffect(() => {
