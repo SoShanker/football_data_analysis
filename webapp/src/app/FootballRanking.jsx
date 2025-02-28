@@ -68,7 +68,7 @@ export default function Home() {
           {rankings.length > 0 ? (
             rankings.map((team, index) => (
               <tr key={index} className="bg-white">
-                <td className="border p-2">{team.Teams}</td>
+                <td className="border p-2 flex space-x-2 items-center font-bold">{<img src={`/${team.Teams.replace(/ /g, '')}.svg`} alt={`${team.Teams} logo`} width={20} height={5}/> }{<span>{team.Teams}</span>}</td>
                 <td className="border p-2">{team.Points}</td>
                 <td className="border p-2">{team.ScoredGoals}</td>
                 <td className="border p-2">{team.TakenGoals}</td>
