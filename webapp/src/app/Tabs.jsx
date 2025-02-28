@@ -17,13 +17,13 @@ function Tabs() {
           className={`tab px-4 py-2 cursor-pointer ${activeTab === 2 ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-500 hover:text-gray-700'}`}
           onClick={() => setActiveTab(2)}
         >
-          Tab 2
+          Matches and calendar
         </div>
         <div
           className={`tab px-4 py-2 cursor-pointer ${activeTab === 3 ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-500 hover:text-gray-700'}`}
           onClick={() => setActiveTab(3)}
         >
-          Tab 3
+          Betting
         </div>
       </div>
 
@@ -37,13 +37,13 @@ function Tabs() {
         {activeTab === 2 && (
           <div className="p-4 bg-green-100 rounded-md shadow-md">
             <h2 className="text-xl font-semibold">Content for Tab 2</h2>
-            <p>This is the content of Tab 2.</p>
+            <p>Here the future matches for each team, statistics and stuff;</p>
           </div>
         )}
         {activeTab === 3 && (
           <div className="p-4 bg-red-100 rounded-md shadow-md">
             <h2 className="text-xl font-semibold">Content for Tab 3</h2>
-            <p>This is the content of Tab 3.</p>
+            <p>Here the prediction about future matches</p>
           </div>
         )}
       </div>
