@@ -1,12 +1,10 @@
 ## Football data analysis
 
 Compute 10 years + 5 leagues of football to build statistical prediction
-
-## Retrieving data
 Data can be found on repositories like : https://datahub.io/collections/football
 The script BulkDownload generate CSV file for the 5 big championship of the 25 last seasons
 
-## Setup and exectution
+# Setup and exectution
 
 Install Python
 
@@ -21,6 +19,16 @@ python3 -m venv venv
 pip install -r requirements.txt
 ```
 
+## Compute data
+
+```shell
+.\venv\Scripts\activate
+python ./BulkDownload.py --all
+python ./AnalyseData.py  --all
+```
+If you don't put the argument --all, it will only collect new data from ongoing season.
+
+# Webapp
 ## Launch python server
 A python server setup an API to get the data files and treat it
 ```shell
