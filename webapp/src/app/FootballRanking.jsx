@@ -13,7 +13,7 @@ export default function Home() {
   }, [year, league]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-2">
       <div className="items-center flex space-x-10 p-0">
         <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">Classement  {league} - Saison {year}/{parseInt(year)+1}</h1>
         <select className="p-3 border rounded" onChange={(e) => setYear(e.target.value)}>
@@ -67,7 +67,7 @@ export default function Home() {
           {rankings.length > 0 ? (
             rankings.map((team, index) => (
               <tr key={index} className="bg-white">
-                <td className="border p-2 flex space-x-2 items-center font-bold">{<img src={`/${team.Teams.replace(/ /g, '')}.svg`} alt={`${team.Teams} logo`} width={20} height={5}/> }{<span>{team.Teams}</span>}</td>
+                <td className="border p-2 flex space-x-2 items-center font-bold">{<img src={`/${team.Teams.replace(/ /g, '')}.svg`} alt={`${team.Teams} logo`} width={15} height={5}/> }{<span>{team.Teams}</span>}</td>
                 <td className="border p-2">{team.Points}</td>
                 <td className="border p-2">{team.ScoredGoals}</td>
                 <td className="border p-2">{team.TakenGoals}</td>

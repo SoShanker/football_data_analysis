@@ -27,21 +27,21 @@ function Tabs() {
         </div>
       </div>
 
-      <div className="tab-content mt-8 p-2">
+      <div className="tab-content">
         {activeTab === 1 && (
-          <div className="p-4">
+          <div className="">
             {/* Render the Home component in Tab 1 */}
             <FootballRanking />
           </div>
         )}
         {activeTab === 2 && (
-          <div className="p-4 bg-green-100 rounded-md shadow-md">
+          <div className="bg-green-100 rounded-md shadow-md">
             <h2 className="text-xl font-semibold">Content for Tab 2</h2>
             <p>Here the future matches for each team, statistics and stuff;</p>
           </div>
         )}
         {activeTab === 3 && (
-          <div className="p-4 bg-red-100 rounded-md shadow-md">
+          <div className="bg-red-100 rounded-md shadow-md">
             <h2 className="text-xl font-semibold">Content for Tab 3</h2>
             <p>Here the prediction about future matches</p>
           </div>
