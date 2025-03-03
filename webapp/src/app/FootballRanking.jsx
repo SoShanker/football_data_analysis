@@ -93,9 +93,10 @@ export default function Home() {
       {/* Détails de l'équipe sélectionnée */}
       {selectedTeam && (
         <div className="w-1/3 p-4 bg-white shadow-lg rounded-lg border border-gray-300 transition-all duration-300">
-          <h2 className="text-2xl font-bold mb-2">{selectedTeam.Teams}</h2>
-          <img src={`/${selectedTeam.Teams.replace(/ /g, '')}.svg`} alt={`${selectedTeam.Teams} logo`} width={50} height={50} className="mb-4" />
-
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-bold mb-2">{selectedTeam.Teams}</h2>
+            <img className="" src={`/${selectedTeam.Teams.replace(/ /g, '')}.svg`} alt={`${selectedTeam.Teams} logo`} width={100} height={100}/>
+          </div>
           <h3 className="text-xl font-bold mt-4">5 Derniers Matchs</h3>
           <div className="flex space-x-1">
             {recentMatches.map((match,i) => {
@@ -119,12 +120,11 @@ export default function Home() {
           {recentMatches.length > 0 ? (
             <ul className="mt-2">
               {recentMatches.map((match, i) => (
-                <li key={i} className="border-b py-2 flex justify-between">
-                  <span>{match.HomeTeam}</span>
-                  <span>{match.FTHG}</span>
-                  <span>{match.FTAG}</span>
-                  <span>{match.AwayTeam}</span>
-                  <span className="font-bold">{match.score}</span>
+                <li key={i} className="border-b py-1 flex justify-between">
+                  <span className="w-1/4 flex space-x-2 items-center font-bold">{<img src={`/${match.HomeTeam.replace(/ /g, '')}.svg`} alt={`${match.HomeTeam} logo`} width={20} height={10}/> }{<span>{match.HomeTeam}</span>}</span>
+                  <span className="w-1/8 text-center">{match.FTHG}</span>
+                  <span className="w-1/8 text-center">{match.FTAG}</span>
+                  <span className="w-1/4 flex space-x-2 items-center font-bold">{<img src={`/${match.AwayTeam.replace(/ /g, '')}.svg`} alt={`${match.AwayTeam} logo`} width={20} height={10}/> }{<span>{match.AwayTeam}</span>}</span>
                 </li>
               ))}
             </ul>
