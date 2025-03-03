@@ -21,6 +21,7 @@ export default function Home() {
       .catch((err) => console.error("Erreur lors du chargement des matchs :", err));
   };
 
+
   const handleTeamClick = (team) => {
     setSelectedTeam(team);
     fetchRecentMatches(team.Teams);
@@ -94,12 +95,27 @@ export default function Home() {
         <div className="w-1/3 p-4 bg-white shadow-lg rounded-lg border border-gray-300 transition-all duration-300">
           <h2 className="text-2xl font-bold mb-2">{selectedTeam.Teams}</h2>
           <img src={`/${selectedTeam.Teams.replace(/ /g, '')}.svg`} alt={`${selectedTeam.Teams} logo`} width={50} height={50} className="mb-4" />
-          <p className="text-lg"><strong>Points :</strong> {selectedTeam.Points}</p>
-          <p className="text-lg"><strong>Buts marqués :</strong> {selectedTeam.ScoredGoals}</p>
-          <p className="text-lg"><strong>Buts encaissés :</strong> {selectedTeam.TakenGoals}</p>
-          <p className="text-lg"><strong>Goal average :</strong> {selectedTeam.GoalAverage}</p>
 
           <h3 className="text-xl font-bold mt-4">5 Derniers Matchs</h3>
+          <div className="flex space-x-1">
+            {recentMatches.map((match,i) => {
+            const isHomeTeam = match.HomeTeam === selectedTeam.Teams;
+            const isAwayTeam = match.AwayTeam === selectedTeam.Teams;
+            let result = "";
+
+            if (match.FTR == "D") {
+              return (<span className="bg-orange-500 text-white rounded-md px-2 py-1 text-sm">D</span>)
+            }
+              else if ((isHomeTeam && match.FTR == "H") | (isAwayTeam && match.FTR == "A") ) {
+                return(<span className="bg-green-500 text-white rounded-md px-2 py-1 text-sm">V</span>) 
+              }
+                else if ((isHomeTeam && match.FTR == "A") | (isAwayTeam && match.FTR == "H") ) {
+                  return(<span className="bg-red-500 text-white rounded-md px-2 py-1 text-sm">L</span>)
+                }
+
+            })}
+          </div>
+
           {recentMatches.length > 0 ? (
             <ul className="mt-2">
               {recentMatches.map((match, i) => (
