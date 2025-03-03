@@ -1,5 +1,6 @@
 import pandas as pd
 import os 
+import argparse
 
 from Variables import *
 class AnalyzeFootballData:
@@ -12,7 +13,7 @@ class AnalyzeFootballData:
             "SerieA":"italian-serie-a",
             "Liga":"spanish-la-liga"
         }
-        self.ongoingseason = "2024-2025"
+        self.ongoingseason = 2024
     
     def compute_ranking(self,league:str,year:int):
         #TODO Check Retraits de points - Exemple Nice a eu un point retiré en 2021-2022 en penalité
@@ -86,11 +87,22 @@ class AnalyzeFootballData:
 
 
 if __name__ == "__main__":
-    analysis = AnalyzeFootballData("FootballData") 
-    #If it's the first time you launch it, use :
-    for league in analysis.leagues:
-        for year in range(2000,2025):
-            analysis.compute_ranking(league,year)
-    #Else
-    # for league in analysis.leagues:
-    #     analysis.compute_ranking(league,analysis.ongoingseason)
+    parser = argparse.ArgumentParser(description="Analyse des données de football.")
+    parser.add_argument(
+        "--all", 
+        action="store_true", 
+        help="Calculer les classements pour toutes les saisons (2000-2024)."
+    )
+    args = parser.parse_args()
+
+    analysis = AnalyzeFootballData("FootballData")
+
+    if args.all:
+        # Calculer pour toutes les saisons
+        for league in analysis.leagues:
+            for year in range(2000, 2025):
+                analysis.compute_ranking(league, year)
+    else:
+        # Calculer uniquement pour la saison en cours
+        for league in analysis.leagues:
+            analysis.compute_ranking(league, analysis.ongoingseason)

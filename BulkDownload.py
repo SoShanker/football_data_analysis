@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import os
 import pandas as pd
+import argparse
 
 from Variables import *
 class BulkDownload:
@@ -59,10 +60,19 @@ class BulkDownload:
         file.to_csv(file_path)
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Récupération des données de football.")
+    parser.add_argument(
+        "--all", 
+        action="store_true", 
+        help="Récupérer les données pour toutes les saisons (2000-2024)."
+    )
+    args = parser.parse_args()
+
     downloader = BulkDownload("FootballData")
-    #If it's the first launch, run 
-    downloader.download_all_data_since_2000()
-    #Else update only
-    # downloader.update_ongoing_season()
+
+    if args.all:
+        downloader.download_all_data_since_2000()
+    else:
+        downloader.update_ongoing_season()
 
     
