@@ -4,6 +4,8 @@ export default function Home() {
   const [year, setYear] = useState("2024");
   const [league, setLeague] = useState("Ligue 1");
   const [rankings, setRankings] = useState([]);
+  const [selectedTeam,setSelectedTeam] = useState(null);
+  const [recentMatches, setRecentMatches] = useState([]);
 
   useEffect(() => {
     fetch(`http://localhost:8000/api/rankings?year=${year}&league=${league.replace(/ /g, '')}`)
@@ -12,75 +14,117 @@ export default function Home() {
       .catch((err) => console.error("Erreur lors du chargement :", err));
   }, [year, league]);
 
-  return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-2">
-      <div className="items-center flex space-x-10 p-0">
-        <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">Classement  {league} - Saison {year}/{parseInt(year)+1}</h1>
-        <select className="p-3 border rounded" onChange={(e) => setYear(e.target.value)}>
-            <option value="2024">2024</option>
-            <option value="2023">2023</option>
-            <option value="2022">2022</option>
-            <option value="2021">2021</option>
-            <option value="2020">2020</option>
-            <option value="2019">2019</option>
-            <option value="2018">2018</option>
-            <option value="2017">2017</option>
-            <option value="2016">2016</option>
-            <option value="2015">2015</option>
-            <option value="2014">2014</option>
-            <option value="2013">2013</option>
-            <option value="2012">2012</option>
-            <option value="2011">2011</option>
-            <option value="2010">2010</option>
-            <option value="2009">2009</option>
-            <option value="2008">2008</option>
-            <option value="2007">2007</option>
-            <option value="2006">2006</option>
-            <option value="2005">2005</option>
-            <option value="2004">2004</option>
-            <option value="2003">2003</option>
-            <option value="2002">2002</option>
-            <option value="2001">2001</option>
-            <option value="2000">2000</option>
-        </select>
-      </div>
-      
-      <div className="flex flex-row items-center flex space-x-10 justify-center bg-gray-100 p-4">
-        <img src={'/Flags.svg#france'} alt="My Image" width={70} height={35} onClick={(e) => setLeague("Ligue 1")}/>
-        <img src={'/Flags.svg#england'} alt="My Image" width={70} height={35} onClick={(e) => setLeague("Premier League")}/>
-        <img src={'/Flags.svg#italy'} alt="My Image" width={70} height={35} onClick={(e) => setLeague("Serie A")}/>
-        <img src={'/Flags.svg#spain'} alt="My Image" width={70} height={35} onClick={(e) => setLeague("Liga")}/>
-        <img src={'/Flags.svg#germany'} alt="My Image" width={70} height={35} onClick={(e) => setLeague("Bundesliga")}/>
-      </div>
+  const fetchRecentMatches = (team) => {
+    fetch(`http://localhost:8000/api/recentmatches?team=${team}&league=${league.replace(/ /g, '')}&season=${parseInt(year)}`)
+      .then((res) => res.json())
+      .then((data) => setRecentMatches(data))
+      .catch((err) => console.error("Erreur lors du chargement des matchs :", err));
+  };
 
-      <table className="table-auto border-collapse border border-gray-400">
-        <thead>
-          <tr className="bg-gray-300">
-            <th className="border p-2">Équipe</th>
-            <th className="border p-2">Points</th>
-            <th className="border p-2">Buts marqués</th>
-            <th className="border p-2">Buts encaissés</th>
-            <th className="border p-2">Goal average</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rankings.length > 0 ? (
-            rankings.map((team, index) => (
-              <tr key={index} className="bg-white">
-                <td className="border p-2 flex space-x-2 items-center font-bold">{<img src={`/${team.Teams.replace(/ /g, '')}.svg`} alt={`${team.Teams} logo`} width={15} height={5}/> }{<span>{team.Teams}</span>}</td>
-                <td className="border p-2">{team.Points}</td>
-                <td className="border p-2">{team.ScoredGoals}</td>
-                <td className="border p-2">{team.TakenGoals}</td>
-                <td className="border p-2">{team.GoalAverage}</td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="3" className="border p-2 text-center">Chargement...</td>
+  const handleTeamClick = (team) => {
+    setSelectedTeam(team);
+    fetchRecentMatches(team.Teams);
+  };
+
+  return (
+    <div className="min-h-screen flex flex-row items-center justify-center bg-gray-100 p-2">
+      <div className="flex flex-col items-center">
+        <div className="items-center flex space-x-10 p-0">
+          <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">Classement  {league} - Saison {year}/{parseInt(year)+1}</h1>
+          <select className="p-3 border rounded" onChange={(e) => setYear(e.target.value)}>
+              {[...Array(25)].map((_, i) => {
+                const season = 2024 - i;
+                return <option key={season} value={season}>{season}</option>;
+              })}
+            </select>
+        </div>
+        
+        <div className="flex flex-row items-center flex space-x-10 justify-center bg-gray-100 p-4">
+            {[
+              { name: "Ligue 1", flag: "france" },
+              { name: "Premier League", flag: "england" },
+              { name: "Serie A", flag: "italy" },
+              { name: "Liga", flag: "spain" },
+              { name: "Bundesliga", flag: "germany" },
+            ].map((l) => (
+              <img
+                key={l.name}
+                src={`/Flags.svg#${l.flag}`}
+                alt={l.name}
+                width={70}
+                height={35}
+                className={`cursor-pointer ${league === l.name ? "border-2" : ""}`}
+                onClick={() => setLeague(l.name)}
+              />
+            ))}
+          </div>
+
+        <table className="table-auto border-collapse border border-gray-400">
+          <thead>
+            <tr className="bg-gray-300">
+              <th className="border p-2">Équipe</th>
+              <th className="border p-2">Points</th>
+              <th className="border p-2">Buts marqués</th>
+              <th className="border p-2">Buts encaissés</th>
+              <th className="border p-2">Goal average</th>
             </tr>
+          </thead>
+          <tbody>
+            {rankings.length > 0 ? (
+              rankings.map((team, index) => (
+                <tr key={index} className="bg-white">
+                  <td className="border p-2 flex space-x-2 items-center font-bold cursor-pointer" onClick={() => handleTeamClick(team)}>{<img src={`/${team.Teams.replace(/ /g, '')}.svg`} alt={`${team.Teams} logo`} width={15} height={5}/> }{<span>{team.Teams}</span>}</td>
+                  <td className="border p-2">{team.Points}</td>
+                  <td className="border p-2">{team.ScoredGoals}</td>
+                  <td className="border p-2">{team.TakenGoals}</td>
+                  <td className="border p-2">{team.GoalAverage}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="3" className="border p-2 text-center">Chargement...</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+      {/* Détails de l'équipe sélectionnée */}
+      {/* Détails de l'équipe sélectionnée */}
+      {selectedTeam && (
+        <div className="w-1/3 p-4 bg-white shadow-lg rounded-lg border border-gray-300 transition-all duration-300">
+          <h2 className="text-2xl font-bold mb-2">{selectedTeam.Teams}</h2>
+          <img src={`/${selectedTeam.Teams.replace(/ /g, '')}.svg`} alt={`${selectedTeam.Teams} logo`} width={50} height={50} className="mb-4" />
+          <p className="text-lg"><strong>Points :</strong> {selectedTeam.Points}</p>
+          <p className="text-lg"><strong>Buts marqués :</strong> {selectedTeam.ScoredGoals}</p>
+          <p className="text-lg"><strong>Buts encaissés :</strong> {selectedTeam.TakenGoals}</p>
+          <p className="text-lg"><strong>Goal average :</strong> {selectedTeam.GoalAverage}</p>
+
+          <h3 className="text-xl font-bold mt-4">5 Derniers Matchs</h3>
+          {recentMatches.length > 0 ? (
+            <ul className="mt-2">
+              {recentMatches.map((match, i) => (
+                <li key={i} className="border-b py-2 flex justify-between">
+                  <span>{match.HomeTeam}</span>
+                  <span>{match.FTHG}</span>
+                  <span>{match.FTAG}</span>
+                  <span>{match.AwayTeam}</span>
+                  <span className="font-bold">{match.score}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-gray-500">Chargement des derniers matchs...</p>
           )}
-        </tbody>
-      </table>
+
+          <button
+            className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700"
+            onClick={() => setSelectedTeam(null)}
+          >
+            Fermer
+          </button>
+        </div>
+      )}
+
     </div>
   );
 }

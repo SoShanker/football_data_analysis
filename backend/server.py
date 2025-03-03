@@ -27,6 +27,20 @@ def get_rankings(year: str, league: str):
     
     return df.to_dict(orient="records")
 
+@app.get("/api/recentmatches")
+def get_recentmatches(team:str,league:str,season:int):
+    file_path = os.path.join(DATA_DIR,f"{league}/season{season}-{season+1}.csv")
+    
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="Fichier non trouvé")
+
+    df = pd.read_csv(file_path)
+    df = df[["HomeTeam","AwayTeam","FTHG","FTAG","FTR"]]
+    df = df[(df['HomeTeam'] == team) | (df['AwayTeam'] == team)]
+    df = df.tail(5)
+    return df.to_dict(orient="records")
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
