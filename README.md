@@ -1,8 +1,9 @@
 ## Football data analysis
 
-Compute 10 years + 5 leagues of football to build statistical prediction
-Data can be found on repositories like : https://datahub.io/collections/football
-The script BulkDownload generate CSV file for the 5 big championship of the 25 last seasons
+Compute 25 years + 5 leagues of football to build a statistical prediction.
+You will be able to deploy your webapp and even run betting advice from your computer.
+
+Data is not included but the script BulkDownload.py generate CSV file for the 5 big championship of the 25 last seasons from https://datahub.io/collections/football.
 
 # Setup and exectution
 
