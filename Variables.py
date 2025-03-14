@@ -75,3 +75,5 @@ UNIQUE_NAMES ={
     "Ajaccio GFCO": "Ajaccio", 
     "AC Ajaccio": "Ajaccio"
 }
+
+ONGOING_SEASON = 2024

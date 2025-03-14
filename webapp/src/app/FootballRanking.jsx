@@ -89,7 +89,7 @@ export default function Home() {
           </tbody>
         </table>
       </div>
-      {/* Détails de l'équipe sélectionnée */}
+
       {/* Détails de l'équipe sélectionnée */}
       {selectedTeam && (
         <div className="w-1/3 p-4 bg-white shadow-lg rounded-lg border border-gray-300 transition-all duration-300">
@@ -113,7 +113,6 @@ export default function Home() {
                 else if ((isHomeTeam && match.FTR == "A") | (isAwayTeam && match.FTR == "H") ) {
                   return(<span className="bg-red-500 text-white rounded-md px-2 py-1 text-sm">L</span>)
                 }
-
             })}
           </div>
 

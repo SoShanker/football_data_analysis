@@ -15,7 +15,7 @@ class BulkDownload:
             "SerieA":"italian-serie-a",
             "Liga":"spanish-la-liga"
         }
-        self.ongoing_season = 2024
+        self.ongoing_season = ONGOING_SEASON
         self.headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'}
 
     def download_file(self, league, season):
